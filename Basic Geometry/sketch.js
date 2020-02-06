@@ -7,11 +7,39 @@
 
 
 let ex,why;
+let posX = 0;
+let posY = 0;
+let moveAllowR = true;
+let moveAllowL = true;
+
+function isOnEdge() {
+  if(keyIsDown(LEFT_ARROW)){
+    if (moveAllowL){
+      posX --;
+    }
+  }
+
+  if(keyIsDown(RIGHT_ARROW)){
+    posX ++;
+  }
+  if(posX < 0){
+    moveAllowL = false;
+    moveAllowR = true;
+  }
+  else if (posX > 0){
+    moveAllowR = false;
+    moveAllowL = true;
+  }
+  else{
+    moveAllowL = true;
+    moveAllowR = true;
+  }
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   ex = width/2;
-  why = height/2;
+  why = (height/2) * 1.5;
 }
 
 
@@ -25,23 +53,26 @@ function character(ex, why){
 
 
 function keyPressed(){
-  if(keyIsDown(LEFT_ARROW)) {
-    ex -= 3;
+  if (moveAllowL){
+    if(keyIsPressed(LEFT_ARROW)) {
+      ex -= 50;
+    }
   }
-
-  if(keyIsDown(RIGHT_ARROW)){
-    ex += 3;
-  }
-  if(keyIsDown(UP_ARROW)){
-    why-=3;
-  }
-  if(keyIsDown(DOWN_ARROW)){
-    why += 3;
+  if (moveAllowR){
+    if(keyIsDown(RIGHT_ARROW)){
+      ex += 50;
+    }
   }
 }
-function draw() {
+function ground(){
+  rect(0, (height / 2) * 1.5, windowWidth, 400);
+}
+
+function draw() 
+{
   
-  background(220);
+  background(248, 252, 167);
+  ground();
   character(ex, why);
   keyPressed();
 }
