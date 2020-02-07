@@ -1,39 +1,23 @@
-// Project Title
-// Your Name
+// Pawsitively the worst
+// Samuel Risling
 // Date
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
 
+let start = true;
+let end = false;
+let main = false;
 let ex,why;
 let posX = 0;
 let posY = 0;
-let moveAllowR = true;
-let moveAllowL = true;
+let allow = 0;
+let s = 1000;
+let possibleBox = [200, 500, 800, 1100, 1400];
 
-function isOnEdge() {
-  if(keyIsDown(LEFT_ARROW)){
-    if (moveAllowL){
-      posX --;
-    }
-  }
+function spawnItem(){
 
-  if(keyIsDown(RIGHT_ARROW)){
-    posX ++;
-  }
-  if(posX < 0){
-    moveAllowL = false;
-    moveAllowR = true;
-  }
-  else if (posX > 0){
-    moveAllowR = false;
-    moveAllowL = true;
-  }
-  else{
-    moveAllowL = true;
-    moveAllowR = true;
-  }
 }
 
 function setup() {
@@ -42,37 +26,49 @@ function setup() {
   why = (height/2) * 1.5;
 }
 
+function timer(){
+  
+  s = s - (Math.round(deltaTime* 0.5).toFixed(2));
+
+  textSize(30);
+  text(s, width/2, height/4);
+}
 
 function character(ex, why){
+  fill(0,0,0); 
   ellipse(ex,why, 50, 50);
   fill(255, 0, 0);
   ellipse(ex - 10, why - 10, 10, 10 );
   ellipse(ex + 10,why - 10, 10, 10);
-  fill(0,0,0); 
+
 }
 
 
 function keyPressed(){
-  if (moveAllowL){
-    if(keyIsPressed(LEFT_ARROW)) {
-      ex -= 50;
+  if(keyCode === LEFT_ARROW) {
+    if(allow > -2) {
+      ex -= 300;
+      allow --;
     }
   }
-  if (moveAllowR){
-    if(keyIsDown(RIGHT_ARROW)){
-      ex += 50;
+
+  if(keyCode === RIGHT_ARROW){
+    if(allow < 2){
+      ex += 300;
+      allow ++;
     }
   }
+  print(ex);
 }
+
 function ground(){
+  fill(122,57,0);
   rect(0, (height / 2) * 1.5, windowWidth, 400);
 }
 
-function draw() 
-{
-  
+function draw() {
   background(248, 252, 167);
   ground();
   character(ex, why);
-  keyPressed();
+  timer();
 }
