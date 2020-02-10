@@ -5,60 +5,128 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+class FoodBowl{
+  constructor(){
+    this.img = 'Images/bowlFull.png';
+    this.full = true;
+
+  }
+
+  isFull(){
+    return this.full;
+  }
+
+
+
+  currImg(){
+    return this.img;
+  }
+
+  emptyMe(){
+    this.img = "Images/bowlEmpty.png"
+ 
+    this.isFull = false;
+    workingTime = 0;
+  }
+
+  fillMe(){
+    this.img = 'Images/bowlFull.png';
+    this.isFull = true;
+  }
+
+}
+
+class TextImages{
+  getEmpty(){return loadImage('Images/empty.png')}
+  getMeow(){return loadImage('Images/meow.png')}
+  getCronch(){return loadImage('Images/cronch.png')}
+
+  backToEmpty(){
+    textyText = this.getEmpty()
+  }
+
+}
+
 
 let start = true;
 let end = false;
 let main = false;
-let ex,why;
-let posX = 0;
-let posY = 0;
-let allow = 0;
-let s = 1000;
-let possibleBox = [200, 500, 800, 1100, 1400];
+let bowlStat = true;
+let ex,why, text;
+let left = false;
+let right = true;
+let workingTime = 0;
+let catR, catL, poster, bowl, cronch, bowlX, meow;
+let numMeows = 0;
+var fBowl = new FoodBowl();
+var tImages = new TextImages();
 
-function spawnItem(){
 
-}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   ex = width/2;
-  why = (height/2) * 1.5;
-}
-
-function timer(){
-  
-  s = s - (Math.round(deltaTime* 0.5).toFixed(2));
-
-  textSize(30);
-  text(s, width/2, height/4);
+  why = (height/2) * 1.2;
+  catR = loadImage('Images/nwz0GOP_5x.png');
+  catL = loadImage('Images/image.png');
+  poster = loadImage('Images/fishPoster.png');
+  textyText = tImages.getEmpty();
+  bowl = loadImage(fBowl.currImg());
+  bowlX = height * 0.55
 }
 
 function character(ex, why){
-  fill(0,0,0); 
-  ellipse(ex,why, 50, 50);
-  fill(255, 0, 0);
-  ellipse(ex - 10, why - 10, 10, 10 );
-  ellipse(ex + 10,why - 10, 10, 10);
+  if(left){
+    image(catL, ex, why, 300, 300);
+  }
 
+  if(right){
+    image(catR, ex, why, 300, 300);
+  }
 }
 
+function cronchF(){
+  if(bowlStat){
+    while(maxTime > workingTime){
+      image(cronch, ex - 20, why - 70, 200, 200);
+      workingTime += deltaTime;
+      console.log(workingTime);
+    }
+    
+    workingTime = 0;
+    bowlStat = false;
+  }
+  else{
+    while(maxTime > workingTime){
+      image(meow, ex - 20, why - 70, 200, 200);
+      workingTime += deltaTime;
+    }
+    workingTime = 0;
+  }
+}
 
 function keyPressed(){
-  if(keyCode === LEFT_ARROW) {
-    if(allow > -2) {
-      ex -= 300;
-      allow --;
-    }
+  if(keyIsDown(LEFT_ARROW)){
+    ex -= 6;
+    left = true;
+    right = false;
   }
 
-  if(keyCode === RIGHT_ARROW){
-    if(allow < 2){
-      ex += 300;
-      allow ++;
+  if(keyIsDown(RIGHT_ARROW)){
+    ex += 6;
+    right = true;
+    left = false;
+  }
+  
+  if (keyIsDown(UP_ARROW)){
+    if(ex < bowlX - 30){
+      if(fBowl.isFull){
+        textyText = tImages.getCronch()
+        fBowl.emptyMe();
+        bowl = loadImage(fBowl.currImg());
+      }
     }
   }
-  print(ex);
 }
 
 function ground(){
@@ -68,7 +136,12 @@ function ground(){
 
 function draw() {
   background(248, 252, 167);
+  image(poster, width * 0.02, height * 0.02, 400, 400);
+  image(textyText, ex + 20, why -70, 400, 400);
   ground();
+  image(bowl, width * 0.02, bowlX, 300, 300);
   character(ex, why);
-  timer();
+  keyPressed();
+  if(frameCount % 60 == 0){tImages.backToEmpty()}
+  
 }
