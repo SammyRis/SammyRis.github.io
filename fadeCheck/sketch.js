@@ -6,67 +6,93 @@
 // - describe what you did to take this project "above and beyond"
 
 let fillOne, fillTwo, fillThree, fillFour;
-let opac = 0;
+let opac = 255;
 let onEnter = true;
-let orBlue = [93,214,245];
-let orYellow = [245, 232, 93];
-let orPurple = [225, 107, 255];
-let loops = true;
+let loops = 0;
+let opacOff = 150;
+let opacOffTwo = 150;
+let opacOffThree = 150;
+let opacOffFour = 150;
+
+class quarters{
+  constructor(q1,q2,q3,q4, fullFill, opacVal){
+    this.q1 = false;
+    this.q2 = false;
+    this.q3 = false;
+    this.q3 = false;
+    this.fullFill = [255, 0, 0, 255];
+    this.opacVal = 0;
+  }
+  fullFill(){
+    return this.fullFill;
+  }
+  opacVal(){
+    return this.opacVal;
+  }
+
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
+
 function colorChange(){
   if(mouseX < width /2 && mouseY < height /2){
-    if(onEnter && opac < 255){
-      opac = 0;
-      onEnter = false;
-      loops = true;
-    }
-    if(opac < 255){
-      opac += 5;
-    }
-    else if(opac === 255){
-      opac ++;
-      onEnter = true;
-    }
-    fillOne = [245, 232, 93, opac];
+
+    fillOne = [252, 15, 3, opac];
+    opacOff = 255;
   }
-  else {fillOne = [225, 107, 255, 233];}
+  else {
+    fillOne = [252, 15, 3, opacOff];
+    if(loops < 255){
+      loops += 1;
+      opacOff -= 1;
+    }
+  }
 
   if (mouseX > width / 2 && mouseY < height / 2){
-    if(onEnter && opac < 255){
-      opac = 0;
-      onEnter = false;
-      loops = true;
-    }
-    if(opac < 255){
-      opac += 5;
-    }
-    else if(opac === 255){
-      opac ++;
-      onEnter = true;
-    }
-    fillTwo = [245, 232, 93];
+
+    fillTwo = [252, 15, 3, opac];
+    opacOff = 255;
   }
+  
   else{
-    fillTwo = [225, 107, 255, 20];
+    fillTwo = [252, 15, 3, opacOffTwo];
+    if(loops < 255){
+      loops += 1;
+      opacOffTwo -= 1;
+    }
   }
+
   if(mouseX < width / 2 && mouseY > height /2){
-    fillThree = [245, 232, 93];
+  
+    fillThree = [252, 15, 3, opac];
+    opacOff = 255;
   }
+  
   else{
-    fillThree = [225, 107, 255, 20];
+    fillThree = [252, 15, 3, opacOffThree];
+    if(loops < 255){
+      loops += 1;
+      opacOffThree -= 1;
+    }
   }
   if(mouseX > width/2 && mouseY > height/2){
-    fillFour = [245, 232, 93];
+    fillFour = [252, 15, 3, opac];
+    opacOff = 255;
   }
   else{
-    fillFour = [225, 107, 255, 233];
+    fillFour = [252, 15, 3, opacOffFour];
+    if(loops < 255){
+      loops += 1;
+      opacOffFour -= 1;
+    }
   }
 }
+
 function draw() {
-  background(93,214,245);
+  background(0);
   colorChange();
   fill(fillOne);
   rect(0,0, width/2, height/2);
