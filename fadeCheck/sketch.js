@@ -15,11 +15,8 @@ let opacOffThree = 150;
 let opacOffFour = 150;
 
 class quarters{
-  constructor(q1,q2,q3,q4, fullFill, opacVal){
-    this.q1 = false;
-    this.q2 = false;
-    this.q3 = false;
-    this.q3 = false;
+  constructor(fullFill, opacVal){
+
     this.fullFill = [255, 0, 0, 255];
     this.opacVal = 0;
   }
@@ -29,7 +26,6 @@ class quarters{
   opacVal(){
     return this.opacVal;
   }
-
 }
 
 function setup() {
@@ -88,6 +84,9 @@ function colorChange(){
       loops += 1;
       opacOffFour -= 1;
     }
+  }
+  if(loops > 255){
+    loops = 0;
   }
 }
 
