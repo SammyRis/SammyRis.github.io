@@ -5,7 +5,8 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-
+let seconds = 0;
+let secondsRotation = 0;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
@@ -28,5 +29,22 @@ function draw() {
     }
     rotate(radians(6));
   }
+  
+  push();
+  stroke(255,0,0);
+  strokeWeight(2);
+  rotate(radians(270));
+  rotate(radians(second() * 6));
+  line(0,0, width*0.10,0);
+  pop();
+
+  push();
+  stroke(0,255,0);
+  strokeWeight(2);
+  rotate(radians(270));
+  rotate(radians(minute() * 6));
+  line(0,0, width*0.13,0);
+  pop();
+  
   pop();
 }
